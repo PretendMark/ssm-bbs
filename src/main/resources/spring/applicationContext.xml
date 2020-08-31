@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 全局配置-扫描除Controlle以外的注解 -->
+    <context:component-scan base-package="com.fly.web">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+    <!-- 加载外部的jdbc配置文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+    <!-- 配置c3p0数据源 -->
+    <bean id="c3p0DataSource"  class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${url}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="driverClass" value="${driver}"></property>
+        <property name="password"  value="${password}"></property>
+        <property name="maxPoolSize" value="${maxPoolSize}"></property>
+        <property name="minPoolSize" value="${minPoolSize}"></property>
+        <property name="initialPoolSize" value="${initialPoolSize}"></property>
+        <property name="maxIdleTime" value="${maxIdleTime}"></property>
+    </bean>
+    <!-- 配置Mybatis -->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="c3p0DataSource"></property>
+        <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"></property>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 指定接口扫描 -->
+        <property name="basePackage" value="com.fly.web.dao"></property>
+    </bean>
+    <!-- 视图解析器 -->
+    <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/asset/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!-- Shiro -->
+    <import resource="classpath:spring/applicationContext-shiro.xml"></import>
+</beans>

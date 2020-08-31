@@ -1,0 +1,6 @@
+redis验证码存储格式为
+验证码本身：键[email + ":verifycode"]  值[verifyCode]
+验证码生存时间：键[email + ":time"]       值[verifyCodeTime]
+验证码重新获取时间：键[email + ":cooling"] 值[verifyCodeCooling]
+每天验证码发送次数：键[email + ":count"   值[每次发送次数++]          方法：web.util.JedisUti.EmailSendExceedThreeTimes
+登录解密私钥：[userEmail + ":" + VerifyCode + ":privateKey"]

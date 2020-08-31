@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fly.web.dao.LoginDao" >
+    <cache></cache>
+    <!-- 通过邮件用户名，查找password字段 -->
+    <select id="getPasswordForUserName" resultType="com.fly.web.pojo.User" useCache="false">
+        select user_email,user_password_salt,user_password_md5,user_password_sha1 from bbs_user where user_email = #{userEmail}
+    </select>
+    <!-- 获取用户发布的所有帖子 -->
+    <select id="getAllQuestion" resultType="com.fly.web.pojo.Question">
+        select question_title,question_create_date,question_access_num,question_comment_num,qid from bbs_question where uid = (select uid from bbs_user where user_email=#{userEmail})
+    </select>
+    <!-- 获取用户收藏的帖子 -->
+    <select id="getUserCollectQuestion" resultType="com.fly.web.pojo.Question" >
+       select q.question_title,q.qid,f.question_favorite_date from bbs_favorite as f
+       LEFT JOIN bbs_question as q
+       on q.uid = f.uid where f.uid = (select uid from bbs_user where user_email = #{userEmail}) group by q.qid
+    </select>
+</mapper>

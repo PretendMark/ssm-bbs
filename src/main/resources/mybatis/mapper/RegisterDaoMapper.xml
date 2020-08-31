@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fly.web.dao.RegisterDao" >
+
+        <!-- 获取某列 -->
+        <select id="getCountFromEmail" resultType="java.lang.Integer">
+            select count(*) from bbs_user where user_email = #{fieldVal}
+        </select>
+        <!-- 保存用户至数据库 -->
+    <insert id="saveUser" parameterType="com.fly.web.pojo.User">
+        INSERT  INTO bbs_user (user_email,user_name,user_password_salt,user_password_sha1,user_password_md5,user_reg_date,user_city)
+        values (#{us.userEmail},#{us.userName},#{us.userPasswordSalt},#{us.userPasswordSha1},#{us.userPasswordMd5},#{us.userRegDate},#{us.userCity})
+    </insert>
+
+
+
+</mapper>

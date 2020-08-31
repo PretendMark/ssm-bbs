@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="jdbc.properties"></properties>
+
+    <settings>
+        <!-- 开启延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 在需要时再去加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 开启全局缓存(默认true) -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 开启驼峰映射 ，为自定义的SQL语句服务-->
+        <!--设置启用数据库字段下划线映射到java对象的驼峰式命名属性，默认为false-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+    </settings>
+    <!-- 注册分页 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+    <!-- Mybatis 考虑的数据库可移植性 -->
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="MySQL" value="mysql"/>
+        <property name="Oracle" value="oracle"/>
+        <property name="SQL Server" value="sqlserver"/>
+    </databaseIdProvider>
+    <!--<mappers>
+        <mapper resource="mapper/*.xml"/>
+        <package name="com.fly.web.dao"/>
+    </mappers>-->
+</configuration>
