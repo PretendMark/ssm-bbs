@@ -16,6 +16,10 @@ import redis.clients.jedis.JedisPool;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+
+/**
+ * 注册
+ */
 @Controller
 @RequestMapping( "/ureg" )
 public class RegisterController {
@@ -46,7 +50,7 @@ public class RegisterController {
             JedisPool	jedisPool	= JedisPoolUtil.getJedisPoolInstance();
             @Cleanup Jedis	jedis		= jedisPool.getResource();
             /* 如果redis里面的token一致 */
-            if ( jedis.get( user.getUserEmail() + ":token" ).equals( user.getUserToken() ) )
+            if (jedis.get( user.getUserEmail() + ":token" )!=null && jedis.get( user.getUserEmail() + ":token" ).equals( user.getUserToken() ) )
             {
                 /* 把用户IP地址获得 */
                 user.setUserCity( RegisterUtil.getIpAddress( req ) );

@@ -22,4 +22,11 @@ public interface LoginService {
      * @return
      */
     List<Question> getUserCollectQuestion(Object userEmail);
+
+    /**
+     * 通过用户邮件获取用户身份信息
+     * @param userEmail
+     * @return
+     */
+    User getUserInfo(Object userEmail);
 }

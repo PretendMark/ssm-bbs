@@ -7,5 +7,4 @@ $(function(){
             ,table = layui.table;
 
     });
-    reloadQuestion();
 });

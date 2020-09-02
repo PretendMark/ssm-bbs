@@ -1,10 +1,7 @@
-var project = "/ssm-bbs";
-layui.use('layer', function(){
-    var layer = layui.layer;
-});
 $(function(){
-    layui.use(['form'], function() {
+    layui.use(['form','layer'], function() {
         var form = layui.form;
+        var layer = layui.layer;
         //前端普通验证
         form.verify({
             um: function (value, item) { //value：表单的值、item：表单的DOM对象

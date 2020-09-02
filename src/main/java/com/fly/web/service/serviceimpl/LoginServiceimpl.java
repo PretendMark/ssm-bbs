@@ -31,4 +31,11 @@ public class LoginServiceimpl implements LoginService {
     public List<Question> getUserCollectQuestion(Object userEmail) {
         return loginDao.getUserCollectQuestion(userEmail);
     }
+
+    @Override
+    public User getUserInfo(Object userEmail) {
+
+
+        return loginDao.getUserInfo(userEmail);
+    }
 }

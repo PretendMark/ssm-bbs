@@ -13,4 +13,6 @@ public interface LoginDao {
     List<Question> getAllQuestion(@Param("userEmail")Object userEmail);
 
     List<Question> getUserCollectQuestion(@Param("userEmail")Object userEmail);
+
+    User getUserInfo(@Param("userEmail")Object userEmail);
 }

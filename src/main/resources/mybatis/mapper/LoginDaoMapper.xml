@@ -16,4 +16,11 @@
        LEFT JOIN bbs_question as q
        on q.uid = f.uid where f.uid = (select uid from bbs_user where user_email = #{userEmail}) group by q.qid
     </select>
+    <!--通过用户邮箱获取用户所有身份信息-->
+    <select id="getUserInfo" resultType="com.fly.web.pojo.User">
+      select r.role_chinese_name,r.role_english_name,u.user_reg_date,u.user_email,u.uid,u.user_name,u.user_picture,u.user_auth,u.user_gender,u.user_sign,u.user_gold,u.user_city
+      from bbs_user as u
+      left join  bbs_role as r
+      on u.roleid = r.rid where u.user_email = #{userEmail}
+    </select>
 </mapper>

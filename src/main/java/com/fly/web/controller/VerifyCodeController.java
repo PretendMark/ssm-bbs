@@ -170,7 +170,7 @@ public class VerifyCodeController {
             }
         } else {
             /* 邮箱验证没有被开启，直接验证普通的验证码 */
-            isCorrect = isCorrectVerifyCode(ClientValidateCode,req);
+            isCorrect = isCorrectVerifyCode( ClientValidateCode, req );
         }
         if ( isCorrect )
         {
@@ -191,43 +191,47 @@ public class VerifyCodeController {
     }
 
 
-    @RequestMapping("/loginVerify")
+    @RequestMapping( "/loginVerify" )
     @ResponseBody
-    public VerifyCode loginVerify(@RequestParam("v") String ClientValidateCode, @RequestParam("e") String userEmail, HttpServletRequest req ) throws NoSuchAlgorithmException {
+    public VerifyCode loginVerify( @RequestParam("v") String ClientValidateCode, @RequestParam("e") String userEmail, HttpServletRequest req ) throws NoSuchAlgorithmException
+    {
         VerifyCode vc = new VerifyCode();
 
-        //验证码不一致
-        if(!isCorrectVerifyCode(ClientValidateCode,req))
+        /* 验证码不一致 */
+        if ( !isCorrectVerifyCode( ClientValidateCode, req ) )
         {
-            vc.setMessage("验证码不一致!验证失败");
-            vc.setState(301);
-            return vc;
+            vc.setMessage( "验证码不一致!验证失败" );
+            vc.setState( 301 );
+            return(vc);
         }
-        //用户不存在
+        /* 用户不存在 */
         if ( !service.isExistUser( userEmail ) )
         {
             vc.setState( 304 );
             vc.setMessage( "此用户不存在!" );
             return(vc);
         }
-        //生成RSA公钥与私钥、公钥给前端密码加密
+        /* 生成RSA公钥与私钥、公钥给前端密码加密 */
         Map<Integer, String> rsa = Encryption.getRSA();
-        vc.setState(302);
-        vc.setMessage("验证码正确!核实密码中...");
-        vc.setToken(rsa.get(0));
-        //把私钥给redis存起来60秒，60秒之内用户没登录，此次密码无效（可能出现第三方登录的情况）
+        vc.setState( 302 );
+        vc.setMessage( "验证码正确!核实密码中..." );
+        vc.setToken( rsa.get( 0 ) );
+        /* 把私钥给redis存起来60秒，60秒之内用户没登录，此次密码无效（可能出现第三方登录的情况） */
         @Cleanup Jedis jedis = jedisPool.getResource();
-        jedis.set(userEmail + ":"+ClientValidateCode+":privateKey",rsa.get(1));
-        jedis.expire(userEmail + ":"+ClientValidateCode + ":privateKey",60);
-        return vc;
+        jedis.set( userEmail + ":" + ClientValidateCode + ":privateKey", rsa.get( 1 ) );
+        jedis.expire( userEmail + ":" + ClientValidateCode + ":privateKey", 60 );
+        return(vc);
     }
-    public Boolean isCorrectVerifyCode(String ClientValidateCode,HttpServletRequest req){
+
+
+    public Boolean isCorrectVerifyCode( String ClientValidateCode, HttpServletRequest req )
+    {
         /* 邮箱验证没有被开启，直接验证普通的验证码 */
         String SessionValidateCode = (String) req.getSession().getAttribute( KAPTCHA_SESSION_KEY ); /* 获取服务端验证码 */
         if ( ClientValidateCode.equalsIgnoreCase( SessionValidateCode ) )
         {
-            return true;
+            return(true);
         }
-        return false;
+        return(false);
     }
 }

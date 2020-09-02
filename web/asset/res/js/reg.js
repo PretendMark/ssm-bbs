@@ -38,6 +38,7 @@ var LockButton = function (btnObjId, locksecends) {
     }, 1000);
 };
 */
+var project = "/ssm-bbs";
 $(function() {
     layui.use(['form'], function() {
         var form = layui.form;

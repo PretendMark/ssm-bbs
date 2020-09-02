@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,15 +34,15 @@
       <!-- 登入后的状态 -->
       <li class="layui-nav-item">
         <a class="fly-nav-avatar" href="javascript:;">
-          <cite class="layui-hide-xs">贤心</cite>
-          <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-          <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
-          <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+          <cite class="layui-hide-xs">${userInfo.userName}</cite>
+          <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：${userInfo.userAuth}"></i>
+          <i class="layui-badge fly-badge-vip layui-hide-xs">${userInfo.roleChineseName}</i>
+          <img src="${userInfo.userPicture}">
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="${absolutePath}/asset/user/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-          <dd><a href="${absolutePath}/asset/user/message.jsp"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-          <dd><a href="${absolutePath}/asset/user/private/home.jsp"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+          <dd><a href="${absolutePath}/asset/user/private/set.jsp?uid=${userInfo.uid}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a href="${absolutePath}/asset/user/private/message.jsp?uid=${userInfo.uid}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+          <dd><a href="${absolutePath}/asset/user/private/home.jsp?uid=${userInfo.uid}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
           <dd><a href="" style="text-align: center;">退出</a></dd>
         </dl>
@@ -51,29 +52,38 @@
 </div>
 
 <div class="fly-home fly-panel" style="background-image: url();">
-  <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
-  <i class="iconfont icon-renzheng" title="Fly社区认证"></i>
+  <img src="${userInfo.userPicture}" alt="${userInfo.userName}">
+  <%--要判断是否认证过--%>
+  <c:if test="${userInfo.userAuth!=null}">
+    <i class="iconfont icon-renzheng" title="${userInfo.userAuth}"></i>
+  </c:if>
   <h1>
-    贤心
-    <i class="iconfont icon-nan"></i>
+    ${userInfo.userName}
+    <!-- 这个用户是男是女 -->
+      <c:if test="${userInfo.userGender=='女'}">
+        <i class="iconfont icon-nv"></i>
+      </c:if>
+      <c:if test="${userInfo.userGender=='男'}">
+        <i class="iconfont icon-nan"></i>
+      </c:if>
     <!-- <i class="iconfont icon-nv"></i>  -->
-    <i class="layui-badge fly-badge-vip">VIP3</i>
-    <!--
-    <span style="color:#c00;">（管理员）</span>
-    <span style="color:#5FB878;">（社区之光）</span>
-    <span>（该号已被封）</span>
-    -->
+    <i class="layui-badge fly-badge-vip">${userInfo.roleChineseName}</i>
+
+    <%--<span>（该号已被封）</span>--%>
+
   </h1>
 
-  <p style="padding: 10px 0; color: #5FB878;">认证信息：layui 作者</p>
+  <p style="padding: 10px 0; color: #5FB878;">${userInfo.userAuth}</p>
 
   <p class="fly-home-info">
-    <i class="iconfont icon-kiss" title="飞吻"></i><span style="color: #FF7200;">66666 飞吻</span>
-    <i class="iconfont icon-shijian"></i><span>2015-6-17 加入</span>
-    <i class="iconfont icon-chengshi"></i><span>来自杭州</span>
+    <c:if test="${userInfo.userGold!=null}">
+      <i class="layui-icon" style="margin-bottom: -3px;">&#xe659;</i> <span style="color: #FF7200;">${userInfo.userGold}</span>
+    </c:if>
+    <i class="iconfont icon-shijian"></i><span>${userInfo.userRegDate} 加入</span>
+    <i class="iconfont icon-chengshi"></i><span>来自${userInfo.userCity}</span>
   </p>
 
-  <p class="fly-home-sign">（人生仿若一场修行）</p>
+  <p class="fly-home-sign">${userInfo.userSign}</p>
 
   <div class="fly-sns" data-user="">
     <a href="javascript:;" class="layui-btn layui-btn-primary fly-imActive" data-type="addFriend">加为好友</a>

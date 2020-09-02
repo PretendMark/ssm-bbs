@@ -59,8 +59,8 @@
           <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="${absolutePath}/asset/user/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-          <dd><a href="${absolutePath}/asset/user/message.jsp"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+          <dd><a href="${absolutePath}/asset/user/private/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a href="${absolutePath}/asset/user/private/message.jsp"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
           <dd><a href="${absolutePath}/asset/user/private/home.jsp"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
           <dd><a href="" style="text-align: center;">退出</a></dd>
