@@ -4,7 +4,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class UserLogin {
+/**
+ * 登录
+ */
+public class UserLoginDTO {
     @Email
     private String userEmail;
     @NotNull

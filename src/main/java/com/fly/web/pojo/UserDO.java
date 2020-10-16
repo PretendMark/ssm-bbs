@@ -1,8 +1,8 @@
 package com.fly.web.pojo;
 
 
-import com.fly.web.util.DateUtils;
-import com.fly.web.util.PathUtil;
+import com.fly.web.util.DateConverter;
+import com.fly.web.util.PathHandler;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -10,7 +10,10 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
+/**
+ * 注册
+ */
+public class UserDO implements Serializable {
     private Integer uid;
     @Email( message = "您的邮箱不正确!" )
     private String userEmail;       /* 用户邮箱 */
@@ -44,7 +47,7 @@ public class User implements Serializable {
     private String	userSign;
     private String	userAuth;
 
-    public User()
+    public UserDO()
     {
     }
 
@@ -247,7 +250,7 @@ public class User implements Serializable {
     {
         //不等于空就是注册 注册存入的是没有转换的时间戳
         if(this.userPasswordSha1 == null){
-            this.userRegDate = DateUtils.fromToday( new Date( Long.parseLong( String.valueOf( userRegDate ) ) ) );
+            this.userRegDate = DateConverter.fromToday( new Date( Long.parseLong( String.valueOf( userRegDate ) ) ) );
         } else {
             this.userRegDate = userRegDate;
         }
@@ -289,7 +292,7 @@ public class User implements Serializable {
         /* 如果用户默认没有上传头像 */
         if ( this.userPicture == null )
         {
-            this.userPicture = PathUtil.getDefaultPicture( this.userGender );
+            this.userPicture = PathHandler.getDefaultPicture( this.userGender );
         }
     }
 

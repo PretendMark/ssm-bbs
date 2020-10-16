@@ -9,10 +9,9 @@ import org.springframework.stereotype.Component;
  * 手动从Spring容器取对象
  */
 @Component
-public class ApplicationContextUtils implements ApplicationContextAware {
+public class ApplicationContextHelper implements ApplicationContextAware {
 
 	private static ApplicationContext applicationContext;
-
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)

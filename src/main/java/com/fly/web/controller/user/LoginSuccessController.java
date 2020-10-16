@@ -1,7 +1,8 @@
 package com.fly.web.controller.user;
 
-import com.fly.web.pojo.Question;
-import com.fly.web.pojo.User;
+import com.fly.web.constant.WebFinal;
+import com.fly.web.pojo.QuestionDO;
+import com.fly.web.pojo.UserDO;
 import com.fly.web.service.serviceimpl.LoginServiceimpl;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @RequestMapping( "/user" )
 @Controller
-public class LoginSuccessController {
+public class LoginSuccessController implements WebFinal {
     @Autowired
     private LoginServiceimpl loginServiceimpl;
 
@@ -31,7 +32,7 @@ public class LoginSuccessController {
         /* 只在增删改之后才会重新从数据库获取数据存session */
         if ( request.getSession().getAttribute( "questionPageInfo" ) != null && request.getSession().getAttribute( "favoriteQuestion" ) != null )
         {
-            return("redirect:/asset/user/private/index.jsp");
+            return USER_LOGIN_SUCCESS;
         }
         /* 使用pageHelper设置紧跟着的查询的数据页数 */
         if ( page <= 0 )
@@ -42,24 +43,23 @@ public class LoginSuccessController {
         Object userEmail = SecurityUtils.getSubject().getPrincipal();
 
         /* 当前用户信息 */
-        User userInfo = loginServiceimpl.getUserInfo( userEmail );
+        UserDO userInfo = loginServiceimpl.getUserInfo( userEmail );
         /* 当前用户发表的帖子 */
-        List<Question> publish = loginServiceimpl.getAllQuestion( userEmail );
+        List<QuestionDO> publish = loginServiceimpl.getAllQuestion( userEmail );
         /* 查询用户收藏的帖子 */
-        List<Question> favorite = loginServiceimpl.getUserCollectQuestion( userEmail );
+        List<QuestionDO> favorite = loginServiceimpl.getUserCollectQuestion( userEmail );
 
 
         /* 设置“我发布的帖子”分页的一些属性，默认分页显示pageSize条 */
-        PageInfo<Question> myPublishQuestionPageinfo = new PageInfo<Question>( publish, pageSize );
+        PageInfo<QuestionDO> myPublishQuestionPageinfo = new PageInfo<QuestionDO>( publish, pageSize );
         /* 设置“我收藏的帖子”分页的一些属性，默认分页显示pageSize条 */
-        PageInfo<Question> myFavoriteQuestionPageinfo = new PageInfo<Question>( favorite, pageSize );
+        PageInfo<QuestionDO> myFavoriteQuestionPageinfo = new PageInfo<QuestionDO>( favorite, pageSize );
 
         /* 设置“用户信息至Session” */
         request.getSession().setAttribute( "userInfo", userInfo );
-        System.out.println( userInfo );
         request.getSession().setAttribute( "PublishQuestionPageInfo", myPublishQuestionPageinfo );
         request.getSession().setAttribute( "FavoriteQuestionPageInfo", myFavoriteQuestionPageinfo );
 
-        return("redirect:/asset/user/private/index.jsp");
+        return USER_LOGIN_SUCCESS;
     }
 }

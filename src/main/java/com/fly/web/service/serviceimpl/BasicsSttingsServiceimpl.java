@@ -1,7 +1,7 @@
 package com.fly.web.service.serviceimpl;
 
 import com.fly.web.dao.BasicsSttingsDao;
-import com.fly.web.pojo.ProvincialAndCity;
+import com.fly.web.pojo.ProvincialAndCityDO;
 import com.fly.web.service.BasicsSttingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,12 @@ public class BasicsSttingsServiceimpl implements BasicsSttingsService {
     private BasicsSttingsDao basicsSttingsDao;
 
 
-    public List<ProvincialAndCity> getProvincialAndCity() {
+    public List<ProvincialAndCityDO> getProvincialAndCity() {
         return basicsSttingsDao.getProvincialAndCity();
+    }
+
+    @Override
+    public Boolean isExistNickname(String newNickname) {
+        return basicsSttingsDao.isExistNickname(newNickname) > 0 ? true : false;
     }
 }

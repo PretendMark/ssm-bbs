@@ -45,7 +45,7 @@
           <dd><a href="${absolutePath}/asset/user/private/message.jsp?uid=${userInfo.uid}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
           <dd><a href="${absolutePath}/asset/user/private/home.jsp?uid=${userInfo.uid}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
-          <dd><a href="${absolutePath}/user/logout" style="text-align: center;">退出</a></dd>
+          <dd><a href="${absolutePath}/ulogin/logout" style="text-align: center;">退出</a></dd>
         </dl>
       </li>
     </ul>
@@ -67,7 +67,7 @@
       </a>
     </li>
     <li class="layui-nav-item">
-      <a href="set.jsp">
+      <a href="${absolutePath}/user/basicsettings?uid=${userInfo.uid}">
         <i class="layui-icon">&#xe620;</i>
         基本设置
       </a>

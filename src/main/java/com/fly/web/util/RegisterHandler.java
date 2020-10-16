@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class RegisterUtil {
+public class RegisterHandler {
     public static String getIpAddress( HttpServletRequest request )
     {
         String ip = request.getHeader( "x-forwarded-for" );

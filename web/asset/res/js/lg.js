@@ -1,4 +1,3 @@
-var project = "/ssm-bbs";
 $(function(){
     layui.use(['form'], function() {
         var form = layui.form;
@@ -19,7 +18,7 @@ $(function(){
                 }
             });
             $.ajax({
-                url: project + "/verifyCode/loginVerify",
+                url: ProPath.projectPath + "/verifyCode/loginVerify",
                 type: "post",
                 data: "v=" + verifyCode + "&d=" + new Date() + "&e=" + e,
                 dataType: "json",

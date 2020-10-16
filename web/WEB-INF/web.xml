@@ -7,23 +7,27 @@
     <!-- Spring.xml -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/applicationContext.xml</param-value>
+        <param-value>classpath:spring/applicationContext-mvc.xml</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <!-- 初始化启动获得一些信息的ServletContextListener -->
     <listener>
-        <listener-class>com.fly.web.util.InitializeServletContextListener</listener-class>
+        <listener-class>com.fly.web.listener.InitializeServletContextListener</listener-class>
+    </listener>
+    <!--会话管理-->
+    <listener>
+        <listener-class>com.fly.web.listener.SessionListener</listener-class>
     </listener>
     <!-- 配置SpringMVC前端控制器 -->
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <!-- Springmvc的配置文件 -->
+        <!-- Springmvc的配置文件 上面已经加载 -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring/applicationContext-mvc.xml</param-value>
+            <param-value></param-value>
         </init-param>
         <!-- 启动的加载顺序 -->
         <load-on-startup>1</load-on-startup>
@@ -67,6 +71,10 @@
         <servlet-name>kaptcha</servlet-name>
         <url-pattern>/kaptcha.jpg</url-pattern>
     </servlet-mapping>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/asset/user/public/login.jsp</location>
+    </error-page>
     <!--
 1. 配置  Shiro 的 shiroFilter.
 2. DelegatingFilterProxy 实际上是 Filter 的一个代理对象. 默认情况下, Spring 会到 IOC 容器中查找和

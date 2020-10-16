@@ -76,6 +76,7 @@
                 /ulogin/** = anon
                 /kaptcha.jpg = anon
                 /test.jsp = anon
+                /test/** = anon
                 /index.jsp = anon
                 /asset/user/reg.jsp = anon
                 /asset/res/** = anon

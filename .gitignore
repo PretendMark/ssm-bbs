@@ -4,3 +4,5 @@ out/
 target/
 ssm-bbs.iml
 generatorConfig.xml
+src\main\java\com\fly\web\test
+todo.txt

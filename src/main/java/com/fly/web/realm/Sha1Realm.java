@@ -1,7 +1,7 @@
 package com.fly.web.realm;
-import com.fly.web.pojo.User;
+import com.fly.web.pojo.UserDO;
 import com.fly.web.service.serviceimpl.LoginServiceimpl;
-import com.fly.web.util.ApplicationContextUtils;
+import com.fly.web.util.ApplicationContextHelper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -10,12 +10,9 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.realm.AuthenticatingRealm;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -32,8 +29,8 @@ public class Sha1Realm extends AuthorizingRealm {
         /* 2. 从 UsernamePasswordToken 中来获取 userEmail */
         String userEmail = upToken.getUsername();
         /* 3. 调用数据库的方法, 从数据库中查询 userEmail 对应的用户记录 */
-        LoginServiceimpl	loginServiceimpl	= (LoginServiceimpl) ApplicationContextUtils.getBean( "loginServiceimpl" );
-        User			user			= loginServiceimpl.getPasswordForUserName( userEmail );
+        LoginServiceimpl	loginServiceimpl	= (LoginServiceimpl) ApplicationContextHelper.getBean( "loginServiceimpl" );
+        UserDO user			= loginServiceimpl.getPasswordForUserName( userEmail );
         /* 4. 若用户不存在, 则可以抛出 UnknownAccountException 异常 前面的方法已经验证过 这里可以省略 */
         if ( null == user )
             throw  new UnknownAccountException();

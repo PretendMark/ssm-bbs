@@ -3,7 +3,7 @@ package com.fly.web.util;
 
 import java.util.Calendar;
 
-public class TimesUtil {
+public class TimesConverter {
 
     /**
      * 获取当前时间距离凌晨24点的剩余时间秒

@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class RedisLogger {
     private Logger log = Logger.getLogger( RedisLogger.class );
 
-    @AfterReturning( "execution(public void com.fly.web.util.JedisUtil.setVerify(..))" )
+    @AfterReturning( "execution(public void com.fly.web.util.JedisHandler.setVerify(..))" )
     public void setVerifyLogger( JoinPoint joinPoint )
     {
         Object[] objects = joinPoint.getArgs();

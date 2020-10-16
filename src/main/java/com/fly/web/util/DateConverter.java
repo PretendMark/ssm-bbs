@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateUtils {
+public class DateConverter {
 
     private static final long ONE_MINUTE = 60;
     private static final long ONE_HOUR = 3600;

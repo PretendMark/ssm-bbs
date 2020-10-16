@@ -2,7 +2,7 @@ package com.fly.web.util;
 
 import java.util.Random;
 
-public class CharacterUtil {
+public class CharacterConverter {
 
     /**
      * 字符串转换为Int
@@ -15,7 +15,7 @@ public class CharacterUtil {
         try{
             int i = Integer.parseInt(propertiesNum);
             if(i > 1){res = i;}
-        } catch (NumberFormatException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         return res;

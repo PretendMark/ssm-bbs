@@ -1,44 +1,3 @@
-/*$(function () {
-    $('body').on('click', '#sendVerify', function () {
-        $('body').off('click', '#sendVerify');
-        LockButton('#sendVerify', 60);
-    })
-
-    if ($.cookie("djsendtime") != undefined && !isNaN($.cookie("djsendtime"))) {
-        var djsendtime = $.cookie("djsendtime");
-        var now = new Date().getTime();
-        var locksecends = parseInt((djsendtime - now) / 1000);
-        if (locksecends <= 0) {
-            $.cookie("djsendtime", null);
-        } else {
-            LockButton('#sendVerify', locksecends);
-        }
-    }
-
-})
-var LockButton = function (btnObjId, locksecends) {
-    var djsendtime = $.cookie("djsendtime");
-    if (djsendtime == null || djsendtime == undefined || djsendtime == 'undefined' || djsendtime == 'null') {
-        var now = new Date().getTime();
-        var endtime = locksecends * 1000 + now;
-        console.log("保存的时间戳"+endtime);
-        $.cookie("djsendtime", endtime);
-    }
-    $(btnObjId).addClass('disabled').attr('disabled', 'disabled').text('(' + locksecends + ')秒后重新获取');
-    //执行发送验证码业务方法
-
-    var timer = setInterval(function () {
-        locksecends--;
-        $(btnObjId).text('(' + locksecends + ')秒后重新获取');
-        if (locksecends <= 0) {
-            $.cookie("djsendtime", null);
-            $(btnObjId).removeClass('disabled').removeAttr('disabled').text('发送验证码');
-            clearInterval(timer);
-        }
-    }, 1000);
-};
-*/
-var project = "/ssm-bbs";
 $(function() {
     layui.use(['form'], function() {
         var form = layui.form;
@@ -58,7 +17,7 @@ $(function() {
                 }
             });
             $.ajax({
-                url: project + "/verifyCode/regVerify",
+                url: ProPath.projectPath + "/verifyCode/regVerify",
                 type: "post",
                 data: "v=" + verifyCode + "&d=" + new Date() + "&e=" + e,
                 dataType: "json",
@@ -90,7 +49,7 @@ $(function() {
         //当查出是关闭的
         if ($.cookie("isEnabled") == null) {
             $.get({
-                url: project + "/verifyCode/emailverify",
+                url: ProPath.projectPath + "/verifyCode/emailverify",
                 dataType: "json",
                 success: function(result) {
                     if (result.emailverify == "false") {
@@ -124,7 +83,7 @@ $(function() {
                 }
             });
             $.ajax({
-                url: project + "/verifyCode/getVerifyCode",
+                url: ProPath.projectPath + "/verifyCode/getVerifyCode",
                 type: "get",
                 dataType: "json",
                 data: {
@@ -168,15 +127,15 @@ function hasDefaultVal() {
     var password = $("#L_pass").val();
     var confirmPassword = $("#L_repass").val();
     if (isEmpty(nickName) || nickName.length > 10) {
-        layer.msg("昵称不能包含空并且长度不能大于10");
+        layer.msg(UserCheck.IncorrectNickname);
         return false;
     }
     if (isEmpty(password) || isEmpty(confirmPassword) || password.length < 6 || password.length > 16) {
-        layer.msg("密码不能包含空并且长度不能低于6大于16");
+        layer.msg(UserCheck.IncorrectPassword);
         return false;
     }
     if (password != confirmPassword) {
-        layer.msg("两次密码不一致!");
+        layer.msg(UserCheck.PwInconformity);
         return false;
     }
     return true;

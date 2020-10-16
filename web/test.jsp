@@ -33,6 +33,7 @@
 <script src="${absolutePath}/asset/res/jquery/jquery-3.2.1.js" type="text/javascript"></script>
 <script src="${absolutePath}/asset/res/jquery/jquery.cookie.js" type="text/javascript"></script>
 <script src="${absolutePath}/asset/res/layui/layui.all.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
     var encrypt = new JSEncrypt();
     encrypt.setPublicKey("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCLHMHCyaQhy6xtJtiQOy3erZdc/jML8NTWYxqWoetRWvOysTBpwPNbF5vBH7TgKtP2sM4eVKwEtBPxvyJqYj5KLRLuSwZD1hIhc/6oVFinZ5NUIIqxuwxUClckbvb4XkHZUst2tgWSTsZvfk4QezBgpEDkdbSxleYYUkWQFTJWJQIDAQAB");

@@ -34,10 +34,9 @@
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
-                    <cite class="layui-hide-xs">贤心</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
-                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                    <cite class="layui-hide-xs">${userInfo.userName}</cite>
+                    <i class="layui-badge fly-badge-vip layui-hide-xs">${userInfo.roleChineseName}</i>
+                    <img src="${userInfo.userPicture}">
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${absolutePath}/asset/user/private/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a>
@@ -48,7 +47,7 @@
                                                                                  style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="" style="text-align: center;">退出</a></dd>
+                    <dd><a href="${absolutePath}/ulogin/logout" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -103,18 +102,20 @@
                 <li lay-id="bind">帐号绑定</li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
+                <!-- 第一个选项tab我的资料 -->
                 <div class="layui-form layui-form-pane layui-tab-item layui-show">
-                    <form method="post">
+                    <form id="userBasicsInfoForm" method="post" action="${absolutePath}/user/updateinfo">
                         <div class="layui-form-item">
-                            <label for="L_email" class="layui-form-label">邮箱</label>
+                          <%--  <label for="L_email" class="layui-form-label">邮箱</label>
                             <div class="layui-input-inline">
                                 <input value="${userInfo.userEmail}" type="text" id="L_email" name="email" required
                                        lay-verify="email" autocomplete="off" value="" class="layui-input">
-                            </div>
+                            </div>--%>
                             <div class="layui-form-mid layui-word-aux">如果您在邮箱已激活的情况下，变更了邮箱，需<a href="../activate.html"
                                                                                                style="font-size: 12px; color: #4f99cf;">重新验证邮箱</a>。
                             </div>
                         </div>
+                        <span id="isExistNickname"></span>
                         <div class="layui-form-item">
                             <label for="L_username" class="layui-form-label">昵称</label>
                             <div class="layui-input-inline">
@@ -135,24 +136,20 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
+                            <!-- 初始化用户所在市 -->
+                            <input id="uCity" type="hidden" value="${userInfo.city}">
+                            <!-- 初始化用户所在省 -->
+                            <input id="uProvince" type="hidden" value="${userInfo.provincial}">
+
                             <label for="L_province" class="layui-form-label" style="border-right: 0px;">城市</label>
+                            <%--省--%>
                             <div class="layui-inline" id="provincialDiv">
                                 <select name="provincial" id="L_province"  autocomplete="off" lay-filter="provincial" lay-search >
-                                    <c:forEach items="${provincialSet}" var="entry">
-                                        <c:if test="${entry!=userInfo.provincial}">
-                                            <option value="${entry}">${entry}</option>
-                                        </c:if>
-                                        <c:if test="${entry==userInfo.provincial}">
-                                            <option selected="" value="${entry}">${entry}</option>
-                                        </c:if>
-                                    </c:forEach>
                                 </select>
                             </div>
+                            <%--市--%>
                             <div class="layui-inline" id="cityDiv">
                                 <select name="city" id="userCity" lay-search autocomplete="off">
-                                    <c:forEach items="${provincialAndCityList}" var="list">
-                                            <option  value="${list.provincial}">${list.city}</option>
-                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
@@ -160,15 +157,15 @@
                             <label for="L_sign" class="layui-form-label">签名</label>
                             <div class="layui-input-block">
                                 <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="sign" autocomplete="off"
-                                          class="layui-textarea" style="height: 80px;"></textarea>
+                                          class="layui-textarea" style="height: 80px;">${userInfo.userSign}</textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit>确认修改</button>
+                            <button class="layui-btn"  lay-filter="updateinfo" lay-submit >确认修改</button>
                         </div>
                     </form>
                 </div>
-
+                <%--第二个选项tab--%>
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <div class="layui-form-item">
                         <div class="avatar-add">
@@ -181,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-
+                <%--第三个选项tab--%>
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <form action="${absolutePath}/asset/user/repass" method="post">
                         <div class="layui-form-item">
@@ -211,7 +208,7 @@
                         </div>
                     </form>
                 </div>
-
+                <%--第四个选项tab--%>
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <ul class="app-bind">
                         <li class="fly-msg app-havebind">
@@ -239,64 +236,12 @@
     </div>
 </div>
 </div>
-
-<div class="fly-footer">
-    <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/"
-                                                                                target="_blank">layui.com 出品</a></p>
-    <p>
-        <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-        <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
-        <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
-    </p>
-</div>
 <script src="${absolutePath}/asset/res/jquery/jquery-3.2.1.js" type="text/javascript"></script>
+<script src="${absolutePath}/asset/res/js/common.js"></script>
+<script src="${absolutePath}/asset/res/js/city.js"></script>
+<script src="${absolutePath}/asset/res/js/set.js"></script>
 <script src="${absolutePath}/asset/res/layui/layui.js" ></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        layui.use(['form'], function () {
-            var form = layui.form;
-            reload(form);
-            form.on('select(provincial)', function (data) {
-                hiddenCity();
-            });
-        });
-    });
-    function reload(){
-        hiddenCity();
-    }
-    //hiddenCity()显示当前选择的省 和 隐藏当前选择的省份不相关的市
-    function hiddenCity(){
-        var showCity = true;
-        //拿到当前选中的省份
-        var currentSelectProvincial = document.getElementById("L_province").value;
-        console.log("option[text="+currentSelectProvincial+"]");
-        console.log("this select provincial text："+currentSelectProvincial);
-        //遍历当前所有循环出来的市
-        $('#cityDiv .layui-anim dd').each(function (index, element) {
-            //拿到市的所属省
-            var everyOneProvincial = $(element).attr("lay-value");
-            //如果循环出来的省份不属于当前选择的省，
-            if(everyOneProvincial != currentSelectProvincial){
-                //就把这个市 隐藏
-                $(element).css("display","none");
-            }else {
-                if(showCity){
-                    //选中当前省第一个市
-                    $(element).css("display","block");
-                    var currentProvincialOneCity = $(element).text();
-                    console.log("this one city text："+currentProvincialOneCity);
-                    var select = 'dd[lay-value=' + currentSelectProvincial + ']';
-                    $('#userCity').siblings("div.layui-form-select").find('dl').find(select).click();
-                    showCity = false;
-                } else {
-                    //当前省其他市
-                    $(element).css("display","block");
-                }
-            }
-        });
-        console.log("update Provincial City："+document.getElementById("L_province").value+"-"+$("select[name='city']").find("option:selected").text());
-    }
-</script>
+
 
 </body>
 </html>

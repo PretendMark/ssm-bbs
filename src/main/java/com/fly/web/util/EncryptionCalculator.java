@@ -13,7 +13,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Encryption {
+public class EncryptionCalculator {
 	/**
 	 *
 	 * @param encryptionMode		加密方式？MD5  SHA1

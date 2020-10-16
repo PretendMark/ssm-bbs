@@ -135,7 +135,7 @@
             alertMsg("${loginError}",7);
             //显示错误后立马请求服务器清空这个Session，避免重复刷新信息
             $.get({
-                url:project + "/user/removeLoginError"
+                url:ProPath.projectPath + "/ulogin/removeLoginError"
             });
         }
     }

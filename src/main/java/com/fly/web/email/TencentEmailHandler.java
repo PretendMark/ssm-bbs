@@ -1,19 +1,16 @@
 package com.fly.web.email;
 
+import com.fly.web.controller.BaseController;
 import com.sun.mail.util.MailSSLSocketFactory;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 @Component
-public class EmailUtil implements Email {
-    private static final String EMAIL_CONFIG = "email-verify.properties";
+public class TencentEmailHandler extends BaseController implements Email {
 
     @Override
     public Boolean sendMail( String receptionMail, String mailHead, String mailContent, String verifyCode )
@@ -22,33 +19,28 @@ public class EmailUtil implements Email {
             /* 邮件发送组成信息 */
             Properties prop = new Properties();
 
-            /* 邮件配置信息 */
-            Properties p = new Properties();
-
-            p.load( new InputStreamReader( new FileInputStream( EmailUtil.class.getClassLoader().getResource( EMAIL_CONFIG ).getPath() ), "UTF-8" ) );
-
             /*
              * 进入QQ邮箱–>邮箱设置–>账户，下滑找到POP3/IMAP/SMTP/Exchange/CardDav/CalDav服务，开启POP3/SMTP服务
              * 每一个邮箱的授权码都不一样
              */
-            String	sendmail	= p.getProperty( "mail.user.auth.account" ).trim();
-            String	sendmailauth	= p.getProperty( "mail.user.auth.code" ).trim();
+            String	sendmail	= this.systemConstant.getProperty("mail.user.auth.account");
+            String	sendmailauth	= this.systemConstant.getProperty("mail.user.auth.code");
 
             /* 设置QQ邮件服务器 */
-            prop.setProperty( "mail.host", p.getProperty( "mail.host" ).trim() );
+            prop.setProperty( "mail.host", this.systemConstant.getProperty("mail.host") );
 
             /* 邮件发送协议 */
-            prop.setProperty( "mail.transport.protocol", p.getProperty( "mail.transport.protocol" ).trim() );
+            prop.setProperty( "mail.transport.protocol", this.systemConstant.getProperty("mail.transport.protocol") );
 
             /* 需要验证用户名密码 */
-            prop.setProperty( "mail.smtp.auth", p.getProperty( "mail.smtp.auth" ).trim() );
+            prop.setProperty( "mail.smtp.auth", this.systemConstant.getProperty("mail.smtp.auth") );
 
             /* qq邮箱需要设置SSL加密，加上以下代码 */
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
 
             sf.setTrustAllHosts( true );
 
-            prop.put( "mail.smtp.ssl.enble", p.getProperty( "mail.smtp.ssl.enble" ).trim() );
+            prop.put( "mail.smtp.ssl.enble", this.systemConstant.getProperty("mail.smtp.ssl.enble") );
 
             prop.put( "mail.smtp.socketFactory", sf );
 
@@ -86,7 +78,7 @@ public class EmailUtil implements Email {
 
             message.setSubject( mailHead );
 
-            message.setContent( mailContent.replace( "![verfyCode]", verifyCode ).replace( "![verifyCodeCooling]", p.getProperty( "verify.code.time" ).trim() ), "text/html;charset=UTF-8" );
+            message.setContent( mailContent.replace( "![verfyCode]", verifyCode ).replace( "![verifyCodeCooling]", this.systemConstant.getProperty("verify.code.time") ), "text/html;charset=UTF-8" );
 
             ts.sendMessage( message, message.getAllRecipients() );
 

@@ -1,6 +1,6 @@
 package com.fly.web.pojo;
 import java.util.Date;
-public class Employee {
+public class EmployeeDO {
     private Integer id;
     private String name;
     private String gender;

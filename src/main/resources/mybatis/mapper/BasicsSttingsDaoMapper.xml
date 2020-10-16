@@ -2,8 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fly.web.dao.BasicsSttingsDao" >
     <cache></cache>
+    <!-- 联表查询开启二级缓存容易出现脏读 -->
     <!-- 查出所有省市 -->
-    <select id="getProvincialAndCity" resultType="com.fly.web.pojo.ProvincialAndCity">
+    <select id="getProvincialAndCity" resultType="com.fly.web.pojo.ProvincialAndCityDO" useCache="false">
         select p.provincial,c.city from bbs_provincial as p left join bbs_city as c on p.pid = c.pid
+    </select>
+    <!-- 查出该用户名数量 -->
+    <select id="isExistNickname" resultType="java.lang.Integer" useCache="false">
+        select count(*) from bbs_user where user_name = #{newNickname}
     </select>
 </mapper>

@@ -1,18 +1,15 @@
 package com.fly.web.controller;
 
+import com.fly.web.constant.State;
 import com.fly.web.exception.EmailException;
-import com.fly.web.pojo.ExceptionBody;
-import com.fly.web.pojo.VerifyCode;
-import org.springframework.ui.Model;
+import com.fly.web.pojo.ResultDTO;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
-import javax.mail.AuthenticationFailedException;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.security.NoSuchAlgorithmException;
 
 @ControllerAdvice
@@ -44,16 +41,16 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler( NoSuchAlgorithmException.class )
     @ResponseBody
-    public ExceptionBody noSuchAlgorithm( NoSuchAlgorithmException e )
+    public ResultDTO noSuchAlgorithm(NoSuchAlgorithmException e )
     {
-        ExceptionBody model = new ExceptionBody();
+        ResultDTO model = ResultDTO.getInstance();
 
 
         /**
          * Do something
          */
-        model.setMessage( "加密算法找不到了。请联系管理员" + e.getMessage() );
-        model.setState( 510 );
+        model.setMessage( State.RSA_NOT_FOUND.Tips() + e.getMessage() );
+        model.setState( State.RSA_NOT_FOUND.value() );
         return(model);
     }
 
@@ -65,16 +62,16 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler( EmailException.class )
     @ResponseBody
-    public VerifyCode isIOException( EmailException e )
+    public ResultDTO isIOException(EmailException e )
     {
-        VerifyCode vc = new VerifyCode();
+        ResultDTO vc = ResultDTO.getInstance();
 
 
         /**
          * Do something
          */
         vc.setMessage( e.getMessage() );
-        vc.setState( 206 );
+        vc.setState(State.EMAIL_SERVICE_FAIL.value() );
         return(vc);
     }
 
@@ -84,16 +81,16 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler( JedisConnectionException.class )
     @ResponseBody
-    public VerifyCode isConnectTimeout( JedisConnectionException e )
+    public ResultDTO isConnectTimeout(JedisConnectionException e )
     {
-        VerifyCode vc = new VerifyCode();
+        ResultDTO vc = ResultDTO.getInstance();
 
 
         /**
          * Do something
          */
-        vc.setMessage( "可能是管理员没有开启Redis，请联系管理员配置好Redis：" + e.getMessage() );
-        vc.setState( 204 );
+        vc.setMessage( State.REDIS_NOT_STARTED.Tips() + e.getMessage() );
+        vc.setState( State.REDIS_NOT_STARTED.value() );
         return(vc);
     }
 
@@ -103,17 +100,16 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler( Exception.class )
     @ResponseBody
-    public ExceptionBody exception( Exception e )
+    public ResultDTO exception(Exception e )
     {
         e.printStackTrace();
-        ExceptionBody eb = new ExceptionBody();
-
+        ResultDTO vc = ResultDTO.getInstance();
 
         /**
          * Do something
          */
-        eb.setMessage( "出了点情况：" + e.getMessage() );
-        eb.setState( 500 );
-        return(eb);
+        vc.setMessage( State.INTERNAL_ERROR.Tips() + e.getMessage() );
+        vc.setState( State.INTERNAL_ERROR.value() );
+        return(vc);
     }
 }

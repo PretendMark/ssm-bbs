@@ -6,7 +6,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.ServletContext;
 import java.io.File;
 
-public class PathUtil {
+public class PathHandler {
     /* 默认男女照片存放目录 */
     private static final String DEFAULT_PICTURE = File.separator + "asset" + File.separator + "res" + File.separator + "images" + File.separator + "default-picture" + File.separator;
 
