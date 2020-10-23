@@ -32,6 +32,12 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.6.8</version>
         </dependency>
+        <!-- 文件上传 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
         <!-- C3P0数据源 -->
         <dependency>
             <groupId>c3p0</groupId>

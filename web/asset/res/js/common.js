@@ -2,7 +2,8 @@ ProPath = {
     projectPath: "/ssm-bbs",
     jsPath: "/asset/res/js",
     cssPath: "/asset/res/css",
-    imgPath: "/asset/res/images"
+    imgPath: "/asset/res/images",
+    pictureUploadPath: "/user/uploadUserPicture"
 };
 UserLengthLimit = {
     NicknameMaxLength: 10,
@@ -19,7 +20,8 @@ UserCheck = {
     AuthcodeLengthError: "验证码长度错误"
 }
 $(function () {
-    layui.use(['form', 'layer'], function () {
+    layui.use(['form', 'layer',"element"], function () {
+        var element = layui.element;
         var form = layui.form;
         var layer = layui.layer;
         //前端普通验证
@@ -103,14 +105,21 @@ function containsSpace(val) {
 
 //有表情
 function alertMsg(msg, icon) {
-    var index = layer.alert(msg, {offset: 'auto', icon: icon});
-    layer.style(index, {
-        color: '#777'
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+        var index = layer.alert(msg, {offset: 'auto', icon: icon});
+        layer.style(index, {
+            color: '#777'
+        });
     });
 }
 
 function show_msg(msg) {
-    layer.msg(msg, {offset: "auto"});
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+        layer.msg(msg, {offset: "auto"});
+    });
+
 }
 
 function syncAjax(url, method, data) {

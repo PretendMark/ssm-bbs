@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * 接收请求得控制类
@@ -22,6 +23,12 @@ public class UserValidityDetection {
         checkUser(request);
         //跳转页面时存入测试 session
         return "test";
+    }
+
+    @RequestMapping("/returnSession")
+    @ResponseBody
+    public HttpSession returnSession(HttpServletRequest request){
+        return request.getSession();
     }
 
     /**

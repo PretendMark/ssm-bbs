@@ -1,9 +1,48 @@
 $(function () {
     window.onload = initUserCity();
-    /*基本信息设置*/
-    //提交
-    layui.use(['form'], function () {
-        var form = layui.form;
+    layui.use(['form','upload','layer'], function () {
+        var form = layui.form,upload = layui.upload,layer = layui.layer;
+        var loadindex;
+        //头像上传
+        var uploadInst = upload.render({
+            elem: '#uploadPicture'
+            ,accept: 'images'
+            ,size: 1024*2
+            ,acceptMime: 'image/jpg, image/png'
+            ,exts: 'jpg|jpeg|png'
+            ,field: 'userPicture'
+            ,url: ProPath.projectPath + ProPath.pictureUploadPath
+            ,before: function(obj){
+                obj.preview(function(index, file, result){
+                    $('#picturePreview').attr('src', result);
+                });
+                loadindex = layer.load(0, {
+                    shade: false,
+                    time: 60*1000
+                });
+            }
+            ,done: function(res){
+                layer.close(loadindex);
+                if(res.state == 200){
+                    layer.msg(res.message);
+                    //上传成功刷新页面，重新查看头像
+                    setTimeout(function(){location.reload(true);},2000);
+                    return;
+                }
+                return layer.msg(res.message);
+            }
+            ,error: function(){
+                layer.close(loadindex);
+                //重新上传
+                var uploadPictureFail = $('#uploadPictureFail');
+                uploadPictureFail.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs uploadPicture-reload"><i class="layui-icon">&#xe669;</i>&nbsp;重试</a>');
+                uploadPictureFail.find('.uploadPicture-reload').on('click', function(){
+                    uploadPictureFail.empty();
+                    uploadInst.upload();
+                });
+            }
+        });
+        //我的资料
         form.on('submit(updateinfo)', function (data) {
             layer.confirm("您确定更改您当前的信息吗？", {
                     cancel: function (index, layero) {
@@ -13,16 +52,10 @@ $(function () {
                     btn1: ['<i class="layui-icon">&#xe605;</i>&nbsp;取消'],
                     title: "温馨提示"
                 },
+                //确认
                 function () {
                     layer.closeAll('dialog');
-                    var un = $("input[name='username']").val();
-                    var provincial = $("#L_province").val();
-                    var city = $("#userCity").val();
-                    var sign = $("#L_sign").val();
-                    console.log("nickname：" + un);
-                    console.log("provincial：" + provincial);
-                    console.log("city：" + city);
-                    console.log("sign：" + sign);
+                    console.log(decodeURI($("#userBasicsInfoForm").serialize()));
                 });
             return false;
         });
@@ -31,9 +64,10 @@ $(function () {
             renderForm();
         });
     });
-    //基本设置-昵称输入框鼠标移开判断
-    $(document).blur(function (e) {
-        var newNickname = $("#L_username").val();
+    //基本设置-输入框的值改变时触发
+    $("#L_username").on("input",function(e){
+        //获取input输入的值
+        var newNickname = e.delegateTarget.value;
         $("#isExistNickname").empty();
         if (this.defaultValue == newNickname) {
             return;

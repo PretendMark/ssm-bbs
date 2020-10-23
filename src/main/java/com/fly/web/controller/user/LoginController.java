@@ -12,6 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -139,6 +140,8 @@ public class LoginController extends BaseController implements WebFinal {
         } else {
             //否则就是第一次登录失败
             JedisHandler.setRedisKey(loginFailCountKey, "1");
+            //设置登录失败计数 保留时间秒  如果没设置 默认为120
+            JedisHandler.setRedisKeyExpire(loginFailCountKey,CharacterConverter.parseInt(this.systemConstant.getProperty("login.fail.keep.seconds"),120));
         }
     }
 

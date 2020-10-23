@@ -19,9 +19,9 @@ public class Md5Realm extends AuthenticatingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken token ) throws AuthenticationException
     {
-        System.out.println( "[MD5验证] doGetAuthenticationInfo" );
         /* 1. 把 AuthenticationToken 转换为 UsernamePasswordToken */
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        System.out.println( "[MD5验证用户] doGetAuthenticationInfo：" + upToken.getPrincipal());
         /* 2. 从 UsernamePasswordToken 中来获取 userEmail(用用户邮件作为的用户名) */
         String userEmail = upToken.getUsername();
         /* 3. 调用数据库的方法, 从数据库中查询 userEmail 对应的用户记录 */

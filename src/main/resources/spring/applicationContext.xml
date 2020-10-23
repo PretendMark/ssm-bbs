@@ -45,6 +45,13 @@
         <property name="prefix" value="/asset/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
+    <!-- 文件解析器 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 最大可上传20M -->
+        <property name="maxUploadSize" value="#{1024*1024 *20}"></property>
+    </bean>
+
     <!-- Shiro -->
     <import resource="classpath:spring/applicationContext-shiro.xml"></import>
 </beans>

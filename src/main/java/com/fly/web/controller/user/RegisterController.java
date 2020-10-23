@@ -4,16 +4,13 @@ import com.fly.web.constant.WebFinal;
 import com.fly.web.pojo.UserDO;
 import com.fly.web.service.serviceimpl.RegisterServiceimpl;
 import com.fly.web.util.JedisHandler;
-import com.fly.web.util.JedisPoolFactory;
 import com.fly.web.util.RegisterHandler;
-import lombok.Cleanup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

@@ -136,6 +136,7 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
+                            <input type="hidden" name="uid"/>
                             <!-- 初始化用户所在市 -->
                             <input id="uCity" type="hidden" value="${userInfo.city}">
                             <!-- 初始化用户所在省 -->
@@ -153,6 +154,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="layui-form-item layui-form-text">
                             <label for="L_sign" class="layui-form-label">签名</label>
                             <div class="layui-input-block">
@@ -165,20 +167,24 @@
                         </div>
                     </form>
                 </div>
-                <%--第二个选项tab--%>
+                <!--第二个选项tab-->
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <div class="layui-form-item">
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="demo1">
+                            <p id="uploadPictureFail"></p>
+                        </div>
                         <div class="avatar-add">
-                            <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
-                            <button type="button" class="layui-btn upload-img">
+                            <p>建议尺寸168*168，支持jpg、png、jpeg，最大不能超过50KB</p>
+                            <button type="button" class="layui-btn upload-img" id="uploadPicture">
                                 <i class="layui-icon">&#xe67c;</i>上传头像
                             </button>
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                            <img id="picturePreview" src="${userInfo.userPicture}">
                             <span class="loading"></span>
                         </div>
                     </div>
                 </div>
-                <%--第三个选项tab--%>
+                <!--第三个选项tab-->
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <form action="${absolutePath}/asset/user/repass" method="post">
                         <div class="layui-form-item">
@@ -208,7 +214,7 @@
                         </div>
                     </form>
                 </div>
-                <%--第四个选项tab--%>
+                <!--第四个选项tab-->
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <ul class="app-bind">
                         <li class="fly-msg app-havebind">

@@ -66,7 +66,7 @@
                             <div class="layui-form-item">
                                 <label for="UEmail" class="layui-form-label">邮箱</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="UEmail" name="userEmail" lay-verify="required|um"
+                                    <input type="text" value="1650056068@qq.com" id="UEmail" name="userEmail" lay-verify="required|um"
                                            autocomplete="off" class="layui-input">
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                             <div class="layui-form-item">
                                 <label for="UPass" class="layui-form-label">密码</label>
                                 <div class="layui-input-inline">
-                                    <input type="password" id="UPass" name="userPassword" lay-verify="required|pw"
+                                    <input type="password" value="123123" id="UPass" name="userPassword" lay-verify="required|pw"
                                            autocomplete="off" class="layui-input">
                                 </div>
                             </div>

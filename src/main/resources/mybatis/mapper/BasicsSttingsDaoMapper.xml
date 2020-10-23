@@ -11,4 +11,8 @@
     <select id="isExistNickname" resultType="java.lang.Integer" useCache="false">
         select count(*) from bbs_user where user_name = #{newNickname}
     </select>
+    <!-- 更新头像图片名称 -->
+    <update id="saveUserPicture">
+        update bbs_user set user_picture = #{userPictureName} where user_email = #{userEmailName}
+    </update>
 </mapper>

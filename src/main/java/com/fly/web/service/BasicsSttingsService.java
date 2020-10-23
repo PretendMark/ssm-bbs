@@ -18,4 +18,12 @@ public interface BasicsSttingsService {
      * @return
      */
     Boolean isExistNickname(String newNickname);
+
+    /**
+     * 更新用户头像图片名称到数据库
+     * @param userName
+     * @param userPictureName
+     * @return
+     */
+    boolean saveUserPicture(String userName, String userPictureName);
 }

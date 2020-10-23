@@ -24,4 +24,9 @@ public class BasicsSttingsServiceimpl implements BasicsSttingsService {
     public Boolean isExistNickname(String newNickname) {
         return basicsSttingsDao.isExistNickname(newNickname) > 0 ? true : false;
     }
+
+    @Override
+    public boolean saveUserPicture(String userEmailName, String userPictureName) {
+        return basicsSttingsDao.saveUserPicture(userEmailName,userPictureName) > 0 ? true : false;
+    }
 }

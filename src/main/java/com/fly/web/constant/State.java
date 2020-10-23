@@ -9,11 +9,13 @@ package com.fly.web.constant;
 public enum State {
 
     EMAIL_AUTHCODE_OK(200, "冷却成功，可以再次发送邮件验证码了"),
+    FILE_UPLOAD_SUCCESS(200,"文件上传成功!"),
     EMAIL_AUTHCODE_COUNTDOWN(202, "再次发送邮件验证码还有冷却时间"),
     EMAIL_AUTHCODE_LIMIT(203, "抱歉-今天发送验证码已经达到上限"),
     REDIS_NOT_STARTED(204, "管理员没有开启Redis 连接redis失败"),
     USER_EXIST(205, "对不起，同一邮箱只能绑定一个账户!"),
     EMAIL_SERVICE_FAIL(206, "邮件服务：发送邮件失败了，请联系管理员检查配置和控制台日志"),
+    FILE_UPLOAD_FAIL(206, "文件上传失败!"),
     AUTH_CODE_OK(300, "验证码效验正确!"),
     AUTH_CODE_FAIL(301, "验证码不一致，验证失败!"),
     AUTH_CODE_EMAIL_OK(302, "验证码效验正确，核实密码中..."),

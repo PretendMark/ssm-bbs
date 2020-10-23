@@ -5,6 +5,7 @@ import com.fly.web.controller.BaseController;
 import redis.clients.jedis.*;
 
 
+
 /**
  * Jedis 连接池
  * @author YuLF
@@ -16,7 +17,6 @@ public class JedisPoolFactory extends BaseController {
     private static JedisPoolConfig poolConfig = null;
     /* redis哨兵,方便主服宕机之后随时获取最新的主服master ip端口 */
     private static JedisSentinelPool jedisSentinelPool = null;
-
 
     /**
      * 当对象初始化后从spring中取出Properties对象 赋值Properties对象给当前对象内得静态对象字段

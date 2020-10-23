@@ -126,11 +126,11 @@ function hasDefaultVal() {
     var nickName = $("#L_username").val();
     var password = $("#L_pass").val();
     var confirmPassword = $("#L_repass").val();
-    if (isEmpty(nickName) || nickName.length > 10) {
+    if (isEmpty(nickName) || nickName.length > UserLengthLimit.NicknameMaxLength) {
         layer.msg(UserCheck.IncorrectNickname);
         return false;
     }
-    if (isEmpty(password) || isEmpty(confirmPassword) || password.length < 6 || password.length > 16) {
+    if (isEmpty(password) || isEmpty(confirmPassword) || password.length < UserLengthLimit.PwMinLength || password.length > UserLengthLimit.PwMaxLength) {
         layer.msg(UserCheck.IncorrectPassword);
         return false;
     }

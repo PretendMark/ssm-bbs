@@ -1,5 +1,7 @@
 package com.fly.web.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,7 +16,8 @@ import java.util.Properties;
 @Component
 public class BaseController {
 
-    @Resource(name = "systemConstant")
+    @Autowired
+    @Qualifier(value = "systemConstant")
     public Properties systemConstant;
 
 }

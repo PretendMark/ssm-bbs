@@ -47,6 +47,15 @@ public class DateConverter {
         SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simple.format(calendar.getTime());
     }
+    /**
+     *
+     * @return
+     *  yyyyMMddHHmmss
+     */
+    public static String getCurrentDate() {
+        SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
+        return simple.format(calendar.getTime());
+    }
 
     /**
      * 距离今天多久

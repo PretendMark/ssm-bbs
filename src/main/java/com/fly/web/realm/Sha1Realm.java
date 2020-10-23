@@ -23,9 +23,9 @@ public class Sha1Realm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken token ) throws AuthenticationException
     {
-        System.out.println( "[Sha1验证] doGetAuthenticationInfo" );
         /* 1. 把 AuthenticationToken 转换为 UsernamePasswordToken */
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        System.out.println( "[Sha1验证用户] doGetAuthenticationInfo：" + upToken.getPrincipal() );
         /* 2. 从 UsernamePasswordToken 中来获取 userEmail */
         String userEmail = upToken.getUsername();
         /* 3. 调用数据库的方法, 从数据库中查询 userEmail 对应的用户记录 */
@@ -64,7 +64,7 @@ public class Sha1Realm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(
             PrincipalCollection principals )
     {
-        System.out.println( "[Sha1验证] doGetAuthorizationInfo。。" );
+        System.out.println( "[Sha1验证用户] doGetAuthorizationInfo。。" );
         /* 1.获取身份信息 */
         String userEmail = (String) principals.getPrimaryPrincipal();
         /* 2.根据用户名 查询用户权限并设置角色权限 */

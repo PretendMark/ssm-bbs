@@ -1,8 +1,11 @@
 package com.fly.web.pojo;
 
 
+import com.fly.web.file.LocalSaveFileAdapter;
+import com.fly.web.file.UserFileUploadAccessor;
 import com.fly.web.util.DateConverter;
 import com.fly.web.util.PathHandler;
+import com.mysql.jdbc.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -19,7 +22,7 @@ public class UserDO implements Serializable {
     private String userEmail;       /* 用户邮箱 */
     @NotEmpty
     @Length( min = 1, max = 10, message = "您的名字长度不正确!" )
-    private String userName;        /* 用户名 */
+    private String userName = "asdadasd";        /* 用户名 */
 
 
     @NotEmpty
@@ -285,12 +288,13 @@ public class UserDO implements Serializable {
 
     public void setUserGender( String userGender )
     {
-        if ( userGender != null && userGender.equals( "1" ) )
+        if ( !StringUtils.isNullOrEmpty(userGender)  && userGender.equals( "1" ) )
         {
             this.userGender = "女";
         } else { this.userGender = "男"; }
-        /* 如果用户默认没有上传头像 */
-        if ( this.userPicture == null )
+        /* 如果用户默认没有上传头像因为Mybatis 如果数据字段为空，不会执行该字段的set方法，但是这个set性别是一定会执行的 */
+        System.out.println("照片为空嘛？"+this.userPicture);
+        if (StringUtils.isNullOrEmpty(this.userPicture) )
         {
             this.userPicture = PathHandler.getDefaultPicture( this.userGender );
         }
@@ -305,7 +309,13 @@ public class UserDO implements Serializable {
 
     public void setUserPicture( String userPicture )
     {
-        this.userPicture = userPicture;
+        //数据库图片名称不等于null 则获取项目访问全路径
+        if(!StringUtils.isNullOrEmpty(userPicture)){
+            UserFileUploadAccessor userFileUploadAccessor = new LocalSaveFileAdapter();
+            this.userPicture = userFileUploadAccessor.getUserPictureAccessPath(userPicture);
+            return;
+        }
+        //如果头像默认为空，根据性别获取默认头像
     }
 
 
