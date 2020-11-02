@@ -1,42 +1,48 @@
+function refreshPage(ms) {
+    setTimeout(function () {
+        location.reload(true);
+    }, ms);
+}
+
 $(function () {
     window.onload = initUserCity();
-    layui.use(['form','upload','layer'], function () {
-        var form = layui.form,upload = layui.upload,layer = layui.layer;
+    layui.use(['form', 'upload', 'layer'], function () {
+        var form = layui.form, upload = layui.upload, layer = layui.layer;
         var loadindex;
         //头像上传
         var uploadInst = upload.render({
             elem: '#uploadPicture'
-            ,accept: 'images'
-            ,size: 1024*2
-            ,acceptMime: 'image/jpg, image/png'
-            ,exts: 'jpg|jpeg|png'
-            ,field: 'userPicture'
-            ,url: ProPath.projectPath + ProPath.pictureUploadPath
-            ,before: function(obj){
-                obj.preview(function(index, file, result){
+            , accept: 'images'
+            , size: 1024 * 2
+            , acceptMime: 'image/jpg, image/png'
+            , exts: 'jpg|jpeg|png'
+            , field: 'userPicture'
+            , url: ProPath.projectPath + ProPath.pictureUploadPath
+            , before: function (obj) {
+                obj.preview(function (index, file, result) {
                     $('#picturePreview').attr('src', result);
                 });
                 loadindex = layer.load(0, {
                     shade: false,
-                    time: 60*1000
+                    time: 60 * 1000
                 });
             }
-            ,done: function(res){
+            , done: function (res) {
                 layer.close(loadindex);
-                if(res.state == 200){
+                if (res.state == 200) {
                     layer.msg(res.message);
-                    //上传成功刷新页面，重新查看头像
-                    setTimeout(function(){location.reload(true);},2000);
+                    //上传成功2秒刷新页面，重新查看头像
+                    refreshPage(2000);
                     return;
                 }
                 return layer.msg(res.message);
             }
-            ,error: function(){
+            , error: function () {
                 layer.close(loadindex);
                 //重新上传
                 var uploadPictureFail = $('#uploadPictureFail');
                 uploadPictureFail.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs uploadPicture-reload"><i class="layui-icon">&#xe669;</i>&nbsp;重试</a>');
-                uploadPictureFail.find('.uploadPicture-reload').on('click', function(){
+                uploadPictureFail.find('.uploadPicture-reload').on('click', function () {
                     uploadPictureFail.empty();
                     uploadInst.upload();
                 });
@@ -55,7 +61,15 @@ $(function () {
                 //确认
                 function () {
                     layer.closeAll('dialog');
-                    console.log(decodeURI($("#userBasicsInfoForm").serialize()));
+                    var updateData = decodeURI($("#userBasicsInfoForm").serialize());
+                    console.log(updateData);
+                    var res = syncAjax(ProPath.projectPath + ProPath.updatePersonalData, "POST", updateData);
+                    if (res.state == 200) {
+                        alertMsg(res.message, 1);
+                        refreshPage(2000);
+                    } else {
+                        alertMsg(res.message, 5);
+                    }
                 });
             return false;
         });
@@ -65,11 +79,11 @@ $(function () {
         });
     });
     //基本设置-输入框的值改变时触发
-    $("#L_username").on("input",function(e){
+    $("#L_username").on("input", function (e) {
         //获取input输入的值
         var newNickname = e.delegateTarget.value;
         $("#isExistNickname").empty();
-        if (this.defaultValue == newNickname) {
+        if (this.defaultValue == newNickname || newNickname == '') {
             return;
         }
         //判断是否有相同的昵称
