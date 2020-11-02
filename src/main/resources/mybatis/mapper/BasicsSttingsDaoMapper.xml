@@ -15,4 +15,8 @@
     <update id="saveUserPicture">
         update bbs_user set user_picture = #{userPictureName} where user_email = #{userEmailName}
     </update>
+    <!-- 更新用户基本设置个人资料 -->
+    <update id="updateUserInfo">
+        update bbs_user set user_name = #{userName},user_gender = #{userGender},user_city = #{userCity},user_sign = #{userSign} where uid = #{uid}
+    </update>
 </mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fly.web.dao.BaseDao" >
+    <!--通过用户id获取用户所有身份信息-->
+    <select id="getUserInfoByUid" resultType="com.fly.web.pojo.UserDO" useCache="false">
+      select r.role_chinese_name,r.role_english_name,u.user_reg_date,u.user_email,u.uid,u.user_name,u.user_picture,u.user_auth,u.user_gender,u.user_sign,u.user_gold,u.user_city
+      from bbs_user as u
+      left join  bbs_role as r
+      on u.roleid = r.rid where u.uid = #{uid}
+    </select>
+
+</mapper>
