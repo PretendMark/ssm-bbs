@@ -1,6 +1,7 @@
 package com.fly.web.service;
 
 import com.fly.web.pojo.ProvincialAndCityDO;
+import com.fly.web.pojo.UserDO;
 
 import java.util.List;
 
@@ -26,4 +27,11 @@ public interface BasicsSttingsService {
      * @return
      */
     boolean saveUserPicture(String userName, String userPictureName);
+
+    /**
+     * 更新用户基本资料
+     * @param user
+     * @return
+     */
+    Boolean updateUserInfo(UserDO user);
 }
