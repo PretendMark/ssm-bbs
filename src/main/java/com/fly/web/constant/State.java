@@ -10,6 +10,7 @@ public enum State {
 
     EMAIL_AUTHCODE_OK(200, "冷却成功，可以再次发送邮件验证码了"),
     FILE_UPLOAD_SUCCESS(200,"文件上传成功!"),
+    USER_UPDATE_SUCCESS(200,"更新成功!"),
     EMAIL_AUTHCODE_COUNTDOWN(202, "再次发送邮件验证码还有冷却时间"),
     EMAIL_AUTHCODE_LIMIT(203, "抱歉-今天发送验证码已经达到上限"),
     REDIS_NOT_STARTED(204, "管理员没有开启Redis 连接redis失败"),
@@ -22,6 +23,7 @@ public enum State {
     USER_NOT_EXIST(304, "用户不存在!"),
     USER_NICKNAME_EXIST(305, "*用户昵称已经被使用了!"),
     USER_NICKNAME_NOT_EXIST(306, "*用户昵称可用!"),
+    DATE_VALIDATION_FAIL(400,"数据效验失败!"),
     INTERNAL_ERROR(500,"服务出现异常："),
     RSA_NOT_FOUND(510,"RSA加密算法未找到。请联系管理员："),
     NULL_ERROR(511,"请求参数为空!查询失败");
@@ -55,6 +57,5 @@ public enum State {
     public int value() {
         return this.value;
     }
-
 
 }
