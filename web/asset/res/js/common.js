@@ -3,7 +3,9 @@ ProPath = {
     jsPath: "/asset/res/js",
     cssPath: "/asset/res/css",
     imgPath: "/asset/res/images",
-    pictureUploadPath: "/user/uploadUserPicture"
+    pictureUploadPath: "/user/uploadUserPicture",
+    updatePersonalData: "/user/updateUserInfo"
+
 };
 UserLengthLimit = {
     NicknameMaxLength: 10,
