@@ -31,7 +31,7 @@ public class RegisterController implements WebFinal{
      * @return
      */
     @RequestMapping( "/register" )
-    public String register(@Valid UserDO user, BindingResult binding, Model model, HttpServletRequest req )
+    public String register(@Validated(UserDO.registerGroup.class) UserDO user, BindingResult binding, HttpServletRequest req )
     {
         /*
          * 后端数据效验步骤 > 实体类注解效验 > 验证效验结果 > 页面回显效验错误数据
