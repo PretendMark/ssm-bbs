@@ -1,12 +1,10 @@
 package com.fly.web.dao;
 
 
-import org.apache.ibatis.annotations.Param;
-
-import java.util.Map;
+import com.fly.web.pojo.UserDO;
 
 public interface BaseDao {
 
 
-
+    UserDO getUserInfoByUid(String uid);
 }
