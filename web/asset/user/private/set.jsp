@@ -119,24 +119,24 @@
                         <div class="layui-form-item">
                             <label for="L_username" class="layui-form-label">昵称</label>
                             <div class="layui-input-inline">
-                                <input value="${userInfo.userName}" type="text" id="L_username" name="username" required
+                                <input value="${userInfo.userName}" type="text" id="L_username" name="userName" required
                                        lay-verify="required" autocomplete="off" value="" class="layui-input">
                             </div>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
                                     <c:if test="${userInfo.userGender=='女'}">
-                                        <input type="radio" name="sex" value="0" title="男">
-                                        <input type="radio" name="sex" value="1" checked title="女">
+                                        <input type="radio" name="userGender" value="男" title="男">
+                                        <input type="radio" name="userGender" value="女" checked title="女">
                                     </c:if>
                                     <c:if test="${userInfo.userGender=='男'}">
-                                        <input type="radio" name="sex" value="0" checked title="男">
-                                        <input type="radio" name="sex" value="1" title="女">
+                                        <input type="radio" name="userGender" value="男" checked title="男">
+                                        <input type="radio" name="userGender" value="女" title="女">
                                     </c:if>
                                 </div>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <input type="hidden" name="uid"/>
+                            <input type="hidden" value="${userInfo.uid}" name="uid"/>
                             <!-- 初始化用户所在市 -->
                             <input id="uCity" type="hidden" value="${userInfo.city}">
                             <!-- 初始化用户所在省 -->
@@ -158,7 +158,7 @@
                         <div class="layui-form-item layui-form-text">
                             <label for="L_sign" class="layui-form-label">签名</label>
                             <div class="layui-input-block">
-                                <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="sign" autocomplete="off"
+                                <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="userSign" autocomplete="off"
                                           class="layui-textarea" style="height: 80px;">${userInfo.userSign}</textarea>
                             </div>
                         </div>
