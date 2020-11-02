@@ -59,7 +59,6 @@ public class LoginSuccessController implements WebFinal {
         request.getSession().setAttribute( "userInfo", userInfo );
         request.getSession().setAttribute( "PublishQuestionPageInfo", myPublishQuestionPageinfo );
         request.getSession().setAttribute( "FavoriteQuestionPageInfo", myFavoriteQuestionPageinfo );
-
         return USER_LOGIN_SUCCESS;
     }
 }
